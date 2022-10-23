@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
   CalculationSummary,
   formSubmission,
@@ -30,13 +30,22 @@ export class MortgageCalculationService {
   ): Observable<CalculationSummary[]> {
     const interestRatePercentage =
       parseInt(mortgageData.plan.interestRate) / 100;
-    const monthlyInterestRate = interestRatePercentage / 12;
-    const roundInterstRate = Number(monthlyInterestRate.toFixed(5));
+    const interestRate = this.determineInterestRate(
+      mortgageData.plan.paymentFrequency,
+      interestRatePercentage
+    );
+    const term = this.determineTerm(
+      mortgageData.plan.term,
+      mortgageData.plan.paymentFrequency
+    );
+    const amortizationPeriod = this.determineAmortization(
+      mortgageData.plan.amortizationPeriod,
+      mortgageData.plan.paymentFrequency
+    );
+    const roundInterstRate = Number(interestRate.toFixed(5));
     const totalLoan = parseInt(mortgageData.plan.mortgageAmt);
-    const amortizationPeriod = mortgageData.plan.amortizationPeriod * 12;
     const caclulatemonthly = 1 + roundInterstRate;
-    console.log(mortgageData.plan.term);
-    const term = mortgageData.plan.term * 12;
+
     const prePayment =
       mortgageData.prePlan.paymentAmt === ''
         ? 0
@@ -80,7 +89,82 @@ export class MortgageCalculationService {
     );
   }
 
-  mapMortgageResults(
+  private determineTerm(term: number, frequency: number) {
+    let paymentTerm;
+    switch (true) {
+      case frequency === 0:
+        paymentTerm = term * 52;
+        break;
+      case frequency === 1:
+        paymentTerm = term * 26;
+        break;
+      case frequency === 2:
+        paymentTerm = term * 12;
+        break;
+      case frequency === 3:
+        paymentTerm = term * 52;
+        break;
+      case frequency === 4:
+        paymentTerm = term * 26;
+        break;
+      case frequency === 5:
+        paymentTerm = term * 24;
+        break;
+    }
+    return paymentTerm as number;
+  }
+
+  private determineAmortization(period: number, frequency: number) {
+    let paymentAmortization;
+    switch (true) {
+      case frequency === 0:
+        paymentAmortization = period * 52;
+        break;
+      case frequency === 1:
+        paymentAmortization = period * 26;
+        break;
+      case frequency === 2:
+        paymentAmortization = period * 12;
+        break;
+      case frequency === 3:
+        paymentAmortization = period * 52;
+        break;
+      case frequency === 4:
+        paymentAmortization = period * 26;
+        break;
+      case frequency === 5:
+        paymentAmortization = period * 24;
+        break;
+    }
+    return paymentAmortization as number;
+  }
+
+  private determineInterestRate(frequency: number, rate: number): number {
+    let interestRate;
+    switch (true) {
+      case frequency === 0:
+        interestRate = rate / 52;
+        break;
+      case frequency === 1:
+        interestRate = rate / 26;
+        break;
+      case frequency === 2:
+        interestRate = rate / 12;
+        break;
+      case frequency === 3:
+        interestRate = rate / 52;
+        break;
+      case frequency === 4:
+        interestRate = rate / 26;
+        break;
+      case frequency === 5:
+        interestRate = rate / 24;
+        break;
+    }
+    return interestRate as number;
+  }
+
+  private mapMortgageResults(
     prepayment: number,
     monthlyPayment: number,
     totalLoan: number,
@@ -122,24 +206,5 @@ export class MortgageCalculationService {
         mortgagePeriod: `$${(monthlyPayment * period).toFixed(2)}`,
       },
     ];
-  }
-
-  calculateInterestPayment(
-    prepayment: number,
-    loan: number,
-    rate: number,
-    period: number
-  ) {
-    if (prepayment === 0) {
-      for (let i = 0; i <= period; i++) {
-        console.log(rate * loan);
-      }
-    }
-    return 5;
-  }
-
-  // Round up decimal places
-  public roundUpDecimal(value: number, place: number) {
-    return Math.ceil(value * Math.pow(10, place)) / Math.pow(10, place);
   }
 }

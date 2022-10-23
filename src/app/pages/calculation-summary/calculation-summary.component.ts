@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CalculationSummary } from 'src/app/model/mortgage.interface';
+import { CalculationSummary } from '../../model/mortgage.interface';
 
 @Component({
   selector: 'app-calculation-summary',

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   CalculationSummary,
   formSubmission,
-} from 'src/app/model/mortgage.interface';
+} from '../../model/mortgage.interface';
 import { MortgageCalculationService } from 'src/app/services/calculation.service';
 
 @Component({
@@ -32,7 +32,6 @@ export class DashboardComponent implements OnInit {
 
   calculateMortgage(ev: formSubmission) {
     this.calculator.CalculateMortgage(ev).subscribe((mortgageResult) => {
-      console.log(mortgageResult);
       this.caclulationSummary = mortgageResult;
     });
   }
