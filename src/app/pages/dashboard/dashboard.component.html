@@ -11,7 +11,11 @@
     </p>
   </div>
 
-  <app-payment-plan></app-payment-plan>
-  <app-calculation-summary></app-calculation-summary>
+  <app-payment-plan
+    (mortgageDataSubmitted)="calculateMortgage($event)"
+  ></app-payment-plan>
+  <app-calculation-summary
+    [caclulationSummary]="caclulationSummary"
+  ></app-calculation-summary>
   <app-mortgage-summary></app-mortgage-summary>
 </div>
