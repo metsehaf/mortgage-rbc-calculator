@@ -1,17 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { frequency, formSubmission } from '../../model/mortgage.interface';
+import {
+  frequency,
+  formSubmission,
+  PaymentFrequency,
+} from '../../model/mortgage.interface';
 
-enum PaymentFrequency {
-  ACCELERATED_WEEKLY = 'Accelerated Weekly',
-  WEEKLY = 'weekly',
-  ACCELERATED_BI = 'Accelerated Bi-weekly',
-  BI_WEEKLY = 'Bi-weekly(every 2 weeks)',
-  SEMI_MONTHLY = 'Semi monthly(24x per year)',
-  MONTHLY = 'Monthly(12x per year)',
-}
-
-enum PaymentFrequency {}
 @Component({
   selector: 'app-payment-plan',
   templateUrl: './payment-plan.component.html',
@@ -79,8 +73,6 @@ export class PaymentPlanComponent implements OnInit {
     });
   }
   calculateMortgage() {
-    const amortization = this.getField('PaymentPlan.AmortizationPeriod')?.value;
-    console.log(amortization);
     const mortgageData: formSubmission = {
       plan: {
         amortizationPeriod: Number(
