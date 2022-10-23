@@ -28,13 +28,17 @@ $breakpoints: (
   width: 100%;
   display: block;
   position: relative;
-  margin: 3rem 0;
+  margin: 4rem 0;
   @include breakpoint(xxsm) {
     overflow-x: auto;
   }
 
   @include breakpoint(sm) {
     overflow-x: visible;
+  }
+
+  @include breakpoint(md){
+    margin: 3rem 0
   }
 
   &__noData {

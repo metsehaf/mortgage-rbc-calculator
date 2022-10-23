@@ -3,7 +3,7 @@ import {
   CalculationSummary,
   formSubmission,
 } from '../../model/mortgage.interface';
-import { MortgageCalculationService } from 'src/app/services/calculation.service';
+import { MortgageCalculationService } from '../../services/calculation.service';
 
 @Component({
   selector: 'app-dashboard',
