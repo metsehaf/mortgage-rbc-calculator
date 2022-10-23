@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CalculationSummary } from 'src/app/model/mortgage.interface';
 
 @Component({
   selector: 'app-calculation-summary',
   templateUrl: './calculation-summary.component.html',
-  styleUrls: ['./calculation-summary.component.scss']
+  styleUrls: ['./calculation-summary.component.scss'],
 })
 export class CalculationSummaryComponent implements OnInit {
+  @Input() caclulationSummary!: CalculationSummary[];
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
